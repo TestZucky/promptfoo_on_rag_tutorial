@@ -1,0 +1,72 @@
+prompts: ['prompt1.txt']
+providers:
+  - openai:gpt-3.5-turbo
+  - openai:gpt-4
+  - openai:gpt-4o
+tests:
+  - description: 'Evaluate response for Pixel Forge Games query'
+    vars:
+      context: 'file://./retrieve_docs.py'
+      question: 'What is Pixel Forge Games?' # Add question var
+    assert:
+      - type: contains
+        value: 'game development company'
+      - type: factuality
+        value: 'immersive and memorable gaming experiences'
+      - type: context-recall
+        value: 'pushing the boundaries of creativity and technology'
+        threshold: 0.6
+      - type: context-relevance
+        threshold: 0.7
+      - type: answer-relevance
+        threshold: 0.8
+
+  - description: 'Evaluate response for the mission statement of PixelForge Games'
+    vars:
+      context: 'file://./retrieve_docs.py'
+      question: 'What is the mission of PixelForge Games?' # Add question var
+    assert:
+      - type: contains
+        value: 'immersive and captivating gaming experiences'
+      - type: factuality
+        value: 'pushing the boundaries of creativity and technology'
+      - type: context-recall
+        value: 'mission driven by storytelling'
+        threshold: 0.7
+      - type: context-relevance
+        threshold: 0.8
+      - type: answer-relevance
+        threshold: 0.8
+      - type: similar
+        value: 'passion for storytelling and connection'
+      - type: moderation
+        value:
+          - harassment
+          - harassment/threatening
+          - sexual
+          - sexual/minors
+
+  - description: 'Evaluate response for the key team members of PixelForge Games'
+    vars:
+      context: 'file://./retrieve_docs.py'
+      question: 'Who are the key team members at PixelForge Games?' # Add question var
+    assert:
+      - type: contains
+        value: 'Alice Thompson'
+      - type: factuality
+        value: 'Founder & CEO'
+      - type: context-recall
+        value: 'background in business management'
+        threshold: 0.7
+      - type: context-relevance
+        threshold: 0.7
+      - type: answer-relevance
+        threshold: 0.8
+      - type: similar
+        value: 'experience and passion for gaming'
+      - type: moderation
+        value:
+          - harassment
+          - harassment/threatening
+          - sexual
+          - sexual/minors

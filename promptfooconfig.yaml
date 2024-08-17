@@ -1,0 +1,15 @@
+prompts:
+  - prompts.txt
+
+providers:
+  - openai:gpt-3.5-turbo
+  - openai:gpt-4o
+  - openai:gpt-4
+
+tests:
+  - description: 'Test translations to French'
+    vars:
+      text: "Hello World"
+    assert:
+      - type: contains
+        value: "Bonjour le monde"
